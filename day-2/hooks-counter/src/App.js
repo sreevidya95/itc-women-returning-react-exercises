@@ -1,5 +1,7 @@
 
 import { useState } from "react"
+import SignUpForm from './SignUpForm.js'
+import ToDo from "./Todo.js";
 function App() {
   const[count,getcount] = useState(0);
   function decrement(){
@@ -23,7 +25,13 @@ function App() {
    <button onClick={decrement}>-</button>
   <div style={divstyle}>{count}</div>
    <button onClick={increment}>+</button>
+   <br></br><br></br>
+   <div>
+   <SignUpForm />
+   </div>
+   {/* <ToDo/> */}
    </>
+   
   );
 }
 

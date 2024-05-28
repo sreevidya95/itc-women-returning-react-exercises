@@ -6,7 +6,6 @@ class ToDoList extends Component {
         input: '',
         tasks: JSON.parse(localStorage.getItem('tasks')) || []
     }
-
     handleAdd = () => {
         if (!this.state.input) return
 
@@ -42,7 +41,7 @@ class ToDoList extends Component {
     render() {
         return (
             <div>
-                <input value={this.state.input} onChange={this.handleChange} />
+                <input value={this.state.input} name="input" onChange={this.handleChange} />
                 <button onClick={this.handleAdd}>add</button>
 
                 <ul>
