@@ -1,8 +1,9 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SignUpForm from './SignUpForm.js'
-import ToDo from "./Todo.js";
+import ToDoList from "./ToDoList.js";
 function App() {
+  // localStorage.setItem('count',null);
   const[count,getcount] = useState(0);
   function reset()
 {
@@ -16,10 +17,16 @@ function App() {
   }
   function increment(){
     if(count<20){
-      getcount(prevcount=>prevcount+1);
+     getcount(count=>count+1);
+     localStorage.setItem('count',count);
     }
-    
   }
+  useEffect(() => {
+    if(localStorage.getItem('count') !== 'undefined' && localStorage.getItem('count') !== 'null')
+      getcount(count=>count=(Number(localStorage.getItem('count'))));
+    return()=>reset();
+  },[]);
+  
   const divstyle={
     color:count>10? "red" :"black"
    }
@@ -33,7 +40,7 @@ function App() {
    <div>
    <SignUpForm />
    </div>
-   {/* <ToDo/> */}
+   <ToDoList/>
    </>
    
   );

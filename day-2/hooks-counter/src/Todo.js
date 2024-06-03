@@ -1,10 +1,10 @@
-function ToDo({ index, task, handleToggle, handleRemove }) {
+function ToDo({ index, task, handleToggle,handleRemove }) {
     return (
         <li key={index}>
             <span
-                onClick={() => handleToggle(index)}
+                 onClick={() => handleToggle(index)}
                 style={{ textDecoration: task.completed && 'line-through' }}>
-                {task.taskName}
+                {task.task}
             </span>
             <button onClick={() => handleRemove(index)}>remove</button>
         </li>

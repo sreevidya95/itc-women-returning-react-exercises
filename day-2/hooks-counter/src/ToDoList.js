@@ -1,65 +1,93 @@
-import { Component } from 'react'
+
+import { useState } from 'react'
 import ToDo from './Todo'
-
-class ToDoList extends Component {
-    state = {
-        input: '',
-        tasks: JSON.parse(localStorage.getItem('tasks')) || []
+export default function ToDoList(){
+    const[todos,getTodo]=useState([]);
+    const[input,setInput]=useState("");
+    function handleAdd(){
+       let todoData={
+        task:input,
+        completed:false
+       }
+       let newTodo=[...todos];
+         newTodo.push(todoData);
+         getTodo(newTodo);
     }
-    handleAdd = () => {
-        if (!this.state.input) return
+    const handleToggle = (index) => {
+                const tasks = [...todos];
+        
+                tasks[index].completed = !tasks[index].completed
+        
+                getTodo(tasks);
+            }
+            function handleRemove(index){
+                        const tasks = [...todos]
+                
+                        tasks.splice(index, 1)
+                
+                        getTodo(tasks )
+                    }
+// class ToDoList extends Component {
+//     state = {
+//         input: '',
+//         tasks: JSON.parse(localStorage.getItem('tasks')) || []
+//     }
 
-        this.setState({ tasks: [...this.state.tasks, { taskName: this.state.input, completed: false }] })
-    }
+//     handleAdd = () => {
+//         if (!this.state.input) return
 
-    handleRemove = (index) => {
-        const tasks = [...this.state.tasks]
+//         this.setState({ tasks: [...this.state.tasks, { taskName: this.state.input, completed: false }] })
+//     }
 
-        tasks.splice(index, 1)
+//     handleRemove = (index) => {
+//         const tasks = [...this.state.tasks]
 
-        this.setState({ tasks })
-    }
+//         tasks.splice(index, 1)
 
-    handleChange = (event) => {
-        this.setState({ input: event.target.value })
-    }
+//         this.setState({ tasks })
+//     }
 
-    handleToggle = (index) => {
-        const tasks = [...this.state.tasks]
+//     handleChange = (event) => {
+//         this.setState({ input: event.target.value })
+//     }
 
-        tasks[index].completed = !tasks[index].completed
+//     handleToggle = (index) => {
+//         const tasks = [...this.state.tasks]
 
-        this.setState({ tasks })
-    }
+//         tasks[index].completed = !tasks[index].completed
 
-    componentDidUpdate = (prevProps, prevState) => {
-        if (this.state.tasks !== prevState.tasks) {
-            localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
-        }
-    }
+//         this.setState({ tasks })
+//     }
 
-    render() {
+//     componentDidUpdate = (prevProps, prevState) => {
+//         if (this.state.tasks !== prevState.tasks) {
+//             localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
+//         }
+//     }
+
+    // render() {
         return (
             <div>
-                <input value={this.state.input} name="input" onChange={this.handleChange} />
-                <button onClick={this.handleAdd}>add</button>
-
-                <ul>
-                    {this.state.tasks.map((task, index) => {
+                   <input type="text" value={input} onChange={(e)=>setInput(e.target.value)}/>
+                    <input type="button" value="add" onClick={handleAdd}/> 
+                 <ul>
+                    {console.log(todos)}
+                    {todos.map((value,key) => {
+                         console.log(key);
                         return (
                             <ToDo 
-                                key={index}
-                                index={index}
-                                task={task}
-                                handleToggle={this.handleToggle}
-                                handleRemove={this.handleRemove}
+                                key={key}
+                                index={key}
+                                task={value}
+                                handleToggle={handleToggle}
+                                handleRemove={handleRemove}
                             />
                         )
                     })}
-                </ul>
+                </ul>  *
             </div>
         )
     }
-}
 
-export default ToDoList
+
+// export default ToDoList
